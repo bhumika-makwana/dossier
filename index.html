@@ -16,10 +16,20 @@
     padding: 20px 24px;
     border-bottom: 1px solid #eaeaea;
   }
+  .header-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
   .site-title {
     font-size: 20px;
     font-weight: 600;
-    margin-bottom: 12px;
+    margin: 0;
+    white-space: nowrap;
   }
   .site-title a {
     color: #111111;
@@ -41,24 +51,32 @@
   nav a:hover {
     text-decoration: underline;
   }
+
+  /* Stack on very small screens */
+  @media (max-width: 480px) {
+    header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
 </style>
 </head>
 <body>
-
 <header>
-  <div class="site-title"><a href="https://bhumika-makwana.github.io/my-portfolio/">Bhumika Makwana</a></div>
-  <nav>
-    <ul>
-      <li><a href="https://bhumika-makwana.github.io/my-portfolio/">Home</a></li>
-      <li><a href="https://bhumika-makwana.github.io/my-portfolio/blog/">Archive</a></li>
-      <li><a href="https://bhumika-makwana.github.io/my-portfolio/projects/">Projects</a></li>
-      <li><a href="https://bhumika-makwana.github.io/my-portfolio/research/">Research</a></li>
-      <li><a href="https://bhumika-makwana.github.io/my-portfolio/links/">Links</a></li>
-      <li><a href="https://bhumika-makwana.github.io/my-portfolio/activities/">Activities</a></li>
-      <li><a href="https://bhumika-makwana.github.io/my-portfolio/about/">About</a></li>
-    </ul>
-  </nav>
+  <div class="header-inner">
+    <div class="site-title"><a href="https://bhumika-makwana.github.io/my-portfolio/">Bhumika Makwana</a></div>
+    <nav>
+      <ul>
+        <li><a href="https://bhumika-makwana.github.io/my-portfolio/">Home</a></li>
+        <li><a href="https://bhumika-makwana.github.io/my-portfolio/blog/">Archive</a></li>
+        <li><a href="https://bhumika-makwana.github.io/my-portfolio/projects/">Projects</a></li>
+        <li><a href="https://bhumika-makwana.github.io/my-portfolio/research/">Research</a></li>
+        <li><a href="https://bhumika-makwana.github.io/my-portfolio/links/">Links</a></li>
+        <li><a href="https://bhumika-makwana.github.io/my-portfolio/activities/">Activities</a></li>
+        <li><a href="https://bhumika-makwana.github.io/my-portfolio/about/">About</a></li>
+      </ul>
+    </nav>
+  </div>
 </header>
-
 </body>
 </html>
