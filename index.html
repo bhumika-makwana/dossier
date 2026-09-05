@@ -26,7 +26,7 @@
     gap: 12px;
   }
   .site-title {
-    font-size: 20px;
+    font-size: 17px;
     font-weight: 600;
     margin: 0;
     white-space: nowrap;
@@ -46,36 +46,63 @@
   nav a {
     color: #0645ad;
     text-decoration: none;
-    font-size: 15px;
+    font-size: 13px;
   }
   nav a:hover {
     text-decoration: underline;
   }
-  /* Stack on very small screens */
   @media (max-width: 480px) {
     header {
       flex-direction: column;
       align-items: flex-start;
     }
   }
+
+  main {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 36px 24px 80px;
+  }
+  main p {
+    font-size: 15px;
+    line-height: 1.7;
+    margin: 0 0 18px;
+  }
+  main a {
+    color: #0645ad;
+    text-decoration: none;
+  }
+  main a:hover {
+    text-decoration: underline;
+  }
 </style>
 </head>
 <body>
 <header>
   <div class="header-inner">
-    <div class="site-title"><a href="https://bhumika-makwana.github.io/dossier/">Bhumika Makwana</a></div>
+    <div class="site-title"><a href="/dossier/">Bhumika Makwana</a></div>
     <nav>
       <ul>
-        <li><a href="https://bhumika-makwana.github.io/dossier/">Home</a></li>
-        <li><a href="https://bhumika-makwana.github.io/dossier/blog/">Archive</a></li>
-        <li><a href="https://bhumika-makwana.github.io/dossier/projects/">Projects</a></li>
-        <li><a href="https://bhumika-makwana.github.io/dossier/research/">Research</a></li>
-        <li><a href="https://bhumika-makwana.github.io/dossier/links/">Links</a></li>
-        <li><a href="https://bhumika-makwana.github.io/dossier/wanderlust/">Wanderlust</a></li>
-        <li><a href="https://bhumika-makwana.github.io/dossier/about/">About</a></li>
+        <li><a href="/dossier/">Home</a></li>
+        <li><a href="/dossier/blog/">Archive</a></li>
+        <li><a href="/dossier/projects/">Projects</a></li>
+        <li><a href="/dossier/research/">Research</a></li>
+        <li><a href="/dossier/links/">Links</a></li>
+        <li><a href="/dossier/wanderlust/">Wanderlust</a></li>
+        <li><a href="/dossier/about/">About</a></li>
       </ul>
     </nav>
   </div>
 </header>
+
+<main>
+  <p>Hi! I'm Bhumika. At 27, I operate out of Bengaluru, India — a city renowned for its rich heritage, vibrant culture, and thriving entrepreneurial ecosystem.</p>
+
+  <p>I work to bring AI to science. I am a Grand Master in ALOHA, and I have loved mathematics since childhood. The tinkering started with an idea to prove mathematics as the language of the universe after reading a metaphor by the astronomer Galileo Galilei, teaching bees to manipulate abstract concepts to solve the arithmetic of a maze — honeybee cognition.</p>
+
+  <p>In January 2016, when astronomers found the first physical evidence of a "burping" black hole. That same year, I later joined <a href="https://www.coeptech.ac.in/">COEP</a> (the third oldest college in Asia), where I was part of <a href="https://csat-web.web.app/">Team CSAT</a>, which launched <a href="https://www.isro.gov.in/SWAYAM.html">Swayam</a>, making it India's first university-built satellite. In the year 2021, my playground involved vector maps, graph algorithms, and geospatial optimization. I was building a multi-parameter routing algorithm that eventually became an external GSoC project contributing to Google Maps.</p>
+
+  <p>Later I joined an early stage startup out of IIT Madras as a Founding Engineer (very proud!), worked at a stealth startup founded by Ex-Google and Amazon Engineers, alongside contributors from top research labs, to build emotionally intelligent video agents for personalised coaching. Got reached out by <a href="https://www.joinef.com/">Entrepreneur's First</a> and started my own venture Pax as many say! I now do angel investing as part of <a href="https://www.hustlefund.vc/">Hustle Fund</a> to help make obsession fundable.</p>
+</main>
 </body>
 </html>
