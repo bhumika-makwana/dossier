@@ -78,8 +78,8 @@
     display: flex;
     align-items: baseline;
     gap: 10px;
-    padding: 7px 0;
-    font-size: 15px;
+    padding: 6px 0;
+    font-size: 13px;
     line-height: 1.5;
     border-bottom: 1px solid #f2f2f2;
   }
@@ -87,7 +87,7 @@
     flex-shrink: 0;
     width: 20px;
     text-align: center;
-    font-size: 14px;
+    font-size: 12px;
   }
   .done {
     color: #1a7f37;
@@ -107,21 +107,90 @@
   .progress-text {
     color: #111111;
   }
+
+  /* Lightbox */
+  .lightbox-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .lightbox-overlay.open {
+    display: flex;
+  }
+  .lightbox-content {
+    position: relative;
+    max-width: 900px;
+    max-height: 85vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .lightbox-content img {
+    max-width: 100%;
+    max-height: 85vh;
+    border-radius: 6px;
+    display: block;
+  }
+  .lightbox-close {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    color: #ffffff;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 4px 8px;
+  }
+  .lightbox-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    border: none;
+    font-size: 22px;
+    padding: 10px 14px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  .lightbox-nav:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+  .lightbox-prev {
+    left: -8px;
+  }
+  .lightbox-next {
+    right: -8px;
+  }
+  @media (max-width: 600px) {
+    .lightbox-nav {
+      font-size: 18px;
+      padding: 8px 10px;
+    }
+  }
 </style>
 </head>
 <body>
 <header>
   <div class="header-inner">
-    <div class="site-title"><a href="https://bhumika-makwana.github.io/my-portfolio/">Bhumika Makwana</a></div>
+    <div class="site-title"><a href="/dossier/">Bhumika Makwana</a></div>
     <nav>
       <ul>
-        <li><a href="https://bhumika-makwana.github.io/dossier/">Home</a></li>
-        <li><a href="https://bhumika-makwana.github.io/dossier/blog/">Archive</a></li>
-        <li><a href="https://bhumika-makwana.github.io/dossier/projects/">Projects</a></li>
-        <li><a href="https://bhumika-makwana.github.io/dossier/research/">Research</a></li>
-        <li><a href="https://bhumika-makwana.github.io/dossier/links/">Links</a></li>
-        <li><a href="https://bhumika-makwana.github.io/dossier/wanderlust/">Wanderlust</a></li>
-        <li><a href="https://bhumika-makwana.github.io/dossier/about/">About</a></li>
+        <li><a href="/dossier/">Home</a></li>
+        <li><a href="/dossier/blog/">Archive</a></li>
+        <li><a href="/dossier/projects/">Projects</a></li>
+        <li><a href="/dossier/research/">Research</a></li>
+        <li><a href="/dossier/links/">Links</a></li>
+        <li><a href="/dossier/wanderlust/">Wanderlust</a></li>
+        <li><a href="/dossier/about/">About</a></li>
       </ul>
     </nav>
   </div>
@@ -135,7 +204,7 @@
     <li><span class="marker">3</span><span>Experience a night safari in Masai Mara, Kenya</span></li>
     <li><span class="marker">4</span><span>Eat ramen in Japan</span></li>
     <li><span class="marker">5</span><span>Sell my startup</span></li>
-    <li><span class="marker done">✔</span><a href="#" class="done-text">See London</a></li>
+    <li><span class="marker done">✔</span><a href="#" class="done-text" data-photos="photos/london-1.jpg,photos/london-2.jpg">See London</a></li>
     <li><span class="marker progress">⏳</span><span class="progress-text">Build a global company with offices in the US, Europe &amp; Asia</span></li>
     <li><span class="marker">8</span><span>Bike ride to Ladakh</span></li>
     <li><span class="marker">9</span><span>Build a home</span></li>
@@ -148,13 +217,73 @@
     <li><span class="marker">16</span><span>Start a bakery &amp; coffee shop</span></li>
     <li><span class="marker">17</span><span>Go to the South Pole</span></li>
     <li><span class="marker">18</span><span>Start a longevity community</span></li>
-    <li><span class="marker done">✔</span><a href="#" class="done-text">Be part of a founding team</a></li>
-    <li><span class="marker done">✔</span><a href="#" class="done-text">Speak at a top conference</a></li>
+    <li><span class="marker done">✔</span><a href="#" class="done-text" data-photos="photos/founding-team-1.jpg">Be part of a founding team</a></li>
+    <li><span class="marker done">✔</span><a href="#" class="done-text" data-photos="photos/conference-1.jpg">Speak at a top conference</a></li>
     <li><span class="marker">21</span><span>Have my own nutrition brand</span></li>
-    <li><span class="marker done">✔</span><a href="#" class="done-text">Visit Cambridge — Observatory site</a></li>
-    <li><span class="marker done">✔</span><a href="#" class="done-text">Learn to drive a car</a></li>
-    <li><span class="marker done">✔</span><a href="#" class="done-text">Road trip — Guwahati to Tawang</a></li>
+    <li><span class="marker done">✔</span><a href="#" class="done-text" data-photos="photos/cambridge-1.jpg,photos/cambridge-2.jpg">Visit Cambridge — Observatory site</a></li>
+    <li><span class="marker done">✔</span><a href="#" class="done-text" data-photos="photos/driving-1.jpg">Learn to drive a car</a></li>
+    <li><span class="marker done">✔</span><a href="#" class="done-text" data-photos="photos/guwahati-tawang-1.jpg,photos/guwahati-tawang-2.jpg,photos/guwahati-tawang-3.jpg">Road trip — Guwahati to Tawang</a></li>
   </ol>
 </main>
+
+<div class="lightbox-overlay" id="lightbox">
+  <div class="lightbox-content">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Close">&times;</button>
+    <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Previous">&#8249;</button>
+    <img id="lightboxImg" src="" alt="Photo">
+    <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Next">&#8250;</button>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var overlay = document.getElementById('lightbox');
+    var imgEl = document.getElementById('lightboxImg');
+    var closeBtn = document.getElementById('lightboxClose');
+    var prevBtn = document.getElementById('lightboxPrev');
+    var nextBtn = document.getElementById('lightboxNext');
+    var photos = [];
+    var current = 0;
+
+    function show(index) {
+      current = (index + photos.length) % photos.length;
+      imgEl.src = photos[current];
+      prevBtn.style.display = photos.length > 1 ? 'block' : 'none';
+      nextBtn.style.display = photos.length > 1 ? 'block' : 'none';
+    }
+
+    function open(list) {
+      photos = list;
+      show(0);
+      overlay.classList.add('open');
+    }
+
+    function close() {
+      overlay.classList.remove('open');
+      imgEl.src = '';
+    }
+
+    document.querySelectorAll('.done-text[data-photos]').forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        var list = link.getAttribute('data-photos').split(',').map(function (s) { return s.trim(); });
+        open(list);
+      });
+    });
+
+    closeBtn.addEventListener('click', close);
+    prevBtn.addEventListener('click', function () { show(current - 1); });
+    nextBtn.addEventListener('click', function () { show(current + 1); });
+    overlay.addEventListener('click', function (e) {
+      if (e.target === overlay) close();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (!overlay.classList.contains('open')) return;
+      if (e.key === 'Escape') close();
+      if (e.key === 'ArrowLeft') show(current - 1);
+      if (e.key === 'ArrowRight') show(current + 1);
+    });
+  })();
+</script>
 </body>
 </html>
