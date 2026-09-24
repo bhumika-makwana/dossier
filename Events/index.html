@@ -3,109 +3,342 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Events — Bhumika Makwana</title>
+
 <style>
+  :root {
+    --text: #111111;
+    --muted: #777777;
+    --line: #dcdcdc;
+    --blue: #0645ad;
+    --bg: #ffffff;
+    --card: #fafafa;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
   body {
     margin: 0;
-    background: #ffffff;
-    color: #111111;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-family:
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      Helvetica,
+      Arial,
+      sans-serif;
   }
+
+  /* ---------------- Header ---------------- */
+
   header {
     background: #ffffff;
     padding: 20px 24px;
     border-bottom: 1px solid #eaeaea;
   }
+
   .header-inner {
     max-width: 900px;
     margin: 0 auto;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
+
     gap: 12px;
   }
+
   .site-title {
     font-size: 17px;
     font-weight: 600;
     margin: 0;
     white-space: nowrap;
   }
+
   .site-title a {
-    color: #111111;
+    color: var(--text);
     text-decoration: none;
   }
+
   nav ul {
     list-style: none;
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+
     margin: 0;
     padding: 0;
   }
+
   nav a {
-    color: #0645ad;
+    color: var(--blue);
     text-decoration: none;
     font-size: 13px;
   }
+
   nav a:hover {
     text-decoration: underline;
   }
-  @media (max-width: 480px) {
-    header {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  }
+
+  /* ---------------- Main ---------------- */
 
   main {
-    max-width: 900px;
+    max-width: 1000px;
     margin: 0 auto;
-    padding: 36px 24px 80px;
-  }
-  main > p.intro {
-    max-width: 700px;
-    font-size: 15px;
-    line-height: 1.75;
-    margin: 0 0 32px;
-  }
-  h1 {
-    font-size: 22px;
-    margin: 0 0 8px;
+    padding: 56px 24px 100px;
   }
 
-  .gallery {
+  h1 {
+    font-size: 28px;
+    line-height: 1.2;
+    margin: 0 0 12px;
+    letter-spacing: -0.02em;
+  }
+
+  .intro {
+    max-width: 660px;
+    font-size: 15px;
+    line-height: 1.75;
+    margin: 0 0 64px;
+    color: #333333;
+  }
+
+  /* ---------------- Timeline ---------------- */
+
+  .timeline {
+    position: relative;
+    margin-top: 20px;
+  }
+
+  /* Vertical line */
+
+  .timeline::before {
+    content: "";
+    position: absolute;
+
+    top: 0;
+    bottom: 0;
+    left: 50%;
+
+    width: 1px;
+    background: var(--line);
+
+    transform: translateX(-50%);
+  }
+
+  .timeline-item {
+    position: relative;
+
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 24px;
+    grid-template-columns: 1fr 90px 1fr;
+    align-items: center;
+
+    margin-bottom: 72px;
   }
-  figure {
-    margin: 0;
-  }
-  figure img {
-    width: 100%;
-    height: 220px;
-    object-fit: cover;
-    border-radius: 6px;
-    display: block;
-    background: #f2f2f2;
-  }
-  figcaption {
-    margin-top: 8px;
+
+  /* ---------------- Date ---------------- */
+
+  .timeline-date {
+    grid-column: 2;
+    grid-row: 1;
+
+    justify-self: center;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 62px;
+    height: 62px;
+
+    background: #ffffff;
+    border: 1px solid #cfcfcf;
+    border-radius: 50%;
+
     font-size: 13px;
-    color: #444444;
-    line-height: 1.5;
+    font-weight: 600;
+
+    z-index: 2;
   }
-  figcaption .event-date {
-    color: #888888;
+
+  /* ---------------- Event block ---------------- */
+
+  .event {
+    display: grid;
+    gap: 18px;
+
+    width: 100%;
+  }
+
+  .event-image {
+    width: 100%;
+    height: 250px;
+
+    object-fit: cover;
+
+    border-radius: 8px;
+    display: block;
+
+    background: #f3f3f3;
+  }
+
+  .event-content {
+    padding: 0 4px;
+  }
+
+  .event-title {
+    margin: 0 0 7px;
+
+    font-size: 15px;
+    line-height: 1.55;
+    font-weight: 500;
+  }
+
+  .event-title a {
+    color: var(--blue);
+    text-decoration: none;
+  }
+
+  .event-title a:hover {
+    text-decoration: underline;
+  }
+
+  .event-meta {
+    margin: 0;
+
     font-size: 12px;
+    line-height: 1.6;
+
+    color: var(--muted);
+  }
+
+  /* ---------------- Alternating sides ---------------- */
+
+  .timeline-item:nth-child(odd) .event {
+    grid-column: 1;
+    grid-row: 1;
+
+    padding-right: 38px;
+  }
+
+  .timeline-item:nth-child(even) .event {
+    grid-column: 3;
+    grid-row: 1;
+
+    padding-left: 38px;
+  }
+
+  /* ---------------- Small connector dots ---------------- */
+
+  .timeline-item::after {
+    content: "";
+
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    width: 7px;
+    height: 7px;
+
+    background: #111111;
+    border-radius: 50%;
+
+    transform: translate(-50%, -50%);
+
+    z-index: 3;
+  }
+
+  /* ---------------- Responsive ---------------- */
+
+  @media (max-width: 700px) {
+
+    header {
+      padding: 18px 20px;
+    }
+
+    .header-inner {
+      align-items: flex-start;
+    }
+
+    nav ul {
+      gap: 14px;
+    }
+
+    main {
+      padding: 42px 20px 70px;
+    }
+
+    h1 {
+      font-size: 25px;
+    }
+
+    .intro {
+      margin-bottom: 48px;
+    }
+
+    /* Move timeline to left */
+
+    .timeline::before {
+      left: 18px;
+      transform: none;
+    }
+
+    .timeline-item {
+      display: block;
+
+      padding-left: 52px;
+      margin-bottom: 54px;
+    }
+
+    .timeline-date {
+      position: absolute;
+
+      top: 0;
+      left: -1px;
+
+      width: 38px;
+      height: 38px;
+
+      font-size: 10px;
+    }
+
+    .timeline-item::after {
+      top: 19px;
+      left: 18px;
+
+      width: 6px;
+      height: 6px;
+    }
+
+    .timeline-item:nth-child(odd) .event,
+    .timeline-item:nth-child(even) .event {
+      display: block;
+      padding: 0;
+    }
+
+    .event-image {
+      height: 210px;
+      margin-bottom: 16px;
+    }
   }
 </style>
 </head>
+
 <body>
+
 <header>
   <div class="header-inner">
-    <div class="site-title"><a href="/dossier/">Bhumika Makwana</a></div>
+
+    <div class="site-title">
+      <a href="/dossier/">Bhumika Makwana</a>
+    </div>
+
     <nav>
       <ul>
         <li><a href="/dossier/">Home</a></li>
@@ -116,65 +349,204 @@
         <li><a href="/dossier/contact/">Contact</a></li>
       </ul>
     </nav>
+
   </div>
 </header>
 
+
 <main>
+
   <h1>Events</h1>
-  <p class="intro">I do events, as well as training workshops. I appreciate every opportunity to share my work.</p>
-  <div class="gallery">
 
-  <figure>
-    <img src="photos/photo-1.jpg" alt="Event photo 1">
-    <figcaption>
-      <a href="https://lnkd.in/p/gFgpSHsr">
-        Women in GRSS with Rebecca Moore, Director of Google Earth, Earth Engine & Outreach.<br>
-        <span class="event-date">IGARSS 2022, Kuala Lumpur, Malaysia.</span>
-      </a>
-    </figcaption>
-  </figure>
+  <p class="intro">
+    I do events, as well as training workshops. I appreciate every opportunity
+    to share my work.
+  </p>
 
-  <figure>
-    <img src="photos/photo-2.jpg" alt="Event photo 2">
-    <figcaption>
-      <a href="https://lnkd.in/p/gWysbmQq">
-        The Fifth Elephant Annual Conference 2025.<br>
-        <span class="event-date">HasGeek 2025, Bengaluru, India.</span>
-      </a>
-    </figcaption>
-  </figure>
 
-  <figure>
-    <img src="photos/photo-3.jpg" alt="Event photo 3">
-    <figcaption>
-      <a href="https://hasgeek.com/fifthelephant/2024/sub/unifying-senses-the-evolution-technology-and-impac-tP7tQnT9y2KLKDN9fCuR4">
-        The Fifth Elephant Annual Conference 2024.<br>
-        <span class="event-date">HasGeek 2024, Bengaluru, India.</span>
-      </a>
-    </figcaption>
-  </figure>
+  <section class="timeline">
 
-  <figure>
-    <img src="photos/photo-4.jpg" alt="Event photo 4">
-    <figcaption>
-      <a href="https://space-robotics-workshop.github.io/icra2026/">
-        Presented a part of our work we've been doing at Pax Orbital at IEEE International Conference on Robotics and Automation (ICRA)<br>
-        <span class="event-date">ICRA 2026, Vienna.</span>
-      </a>
-    </figcaption>
-  </figure>
 
-  <figure>
-    <img src="photos/photo-5.jpg" alt="Event photo 5">
-    <figcaption>
-      <a href="https://lnkd.in/p/gABCaJy3">
-        Exoplanets - Hycean Worlds, Institute of Astronomy | Cambridge<br>
-        <span class="event-date">June 2026, Cambridge, UK.</span>
-      </a>
-    </figcaption>
-  </figure>
+    <!-- 2022 -->
 
-</div>
+    <article class="timeline-item">
+
+      <div class="timeline-date">
+        2022
+      </div>
+
+      <div class="event">
+
+        <img
+          class="event-image"
+          src="photos/photo-1.jpg"
+          alt="Women in GRSS at IGARSS 2022"
+        >
+
+        <div class="event-content">
+
+          <p class="event-title">
+            <a href="https://lnkd.in/p/gFgpSHsr">
+              Women in GRSS with Rebecca Moore, Director of Google Earth,
+              Earth Engine & Outreach.
+            </a>
+          </p>
+
+          <p class="event-meta">
+            IGARSS 2022 · Kuala Lumpur, Malaysia
+          </p>
+
+        </div>
+
+      </div>
+
+    </article>
+
+
+    <!-- 2024 -->
+
+    <article class="timeline-item">
+
+      <div class="timeline-date">
+        2024
+      </div>
+
+      <div class="event">
+
+        <img
+          class="event-image"
+          src="photos/photo-3.jpg"
+          alt="The Fifth Elephant Annual Conference 2024"
+        >
+
+        <div class="event-content">
+
+          <p class="event-title">
+            <a href="https://hasgeek.com/fifthelephant/2024/sub/unifying-senses-the-evolution-technology-and-impac-tP7tQnT9y2KLKDN9fCuR4">
+              The Fifth Elephant Annual Conference 2024.
+            </a>
+          </p>
+
+          <p class="event-meta">
+            HasGeek 2024 · Bengaluru, India
+          </p>
+
+        </div>
+
+      </div>
+
+    </article>
+
+
+    <!-- 2025 -->
+
+    <article class="timeline-item">
+
+      <div class="timeline-date">
+        2025
+      </div>
+
+      <div class="event">
+
+        <img
+          class="event-image"
+          src="photos/photo-2.jpg"
+          alt="The Fifth Elephant Annual Conference 2025"
+        >
+
+        <div class="event-content">
+
+          <p class="event-title">
+            <a href="https://lnkd.in/p/gWysbmQq">
+              The Fifth Elephant Annual Conference 2025.
+            </a>
+          </p>
+
+          <p class="event-meta">
+            HasGeek 2025 · Bengaluru, India
+          </p>
+
+        </div>
+
+      </div>
+
+    </article>
+
+
+    <!-- 2026 -->
+
+    <article class="timeline-item">
+
+      <div class="timeline-date">
+        2026
+      </div>
+
+      <div class="event">
+
+        <img
+          class="event-image"
+          src="photos/photo-4.jpg"
+          alt="ICRA 2026 presentation"
+        >
+
+        <div class="event-content">
+
+          <p class="event-title">
+            <a href="https://space-robotics-workshop.github.io/icra2026/">
+              Presented a part of our work at Pax Orbital at the IEEE
+              International Conference on Robotics and Automation (ICRA).
+            </a>
+          </p>
+
+          <p class="event-meta">
+            ICRA 2026 · Vienna, Austria
+          </p>
+
+        </div>
+
+      </div>
+
+    </article>
+
+
+    <!-- June 2026 -->
+
+    <article class="timeline-item">
+
+      <div class="timeline-date">
+        2026
+      </div>
+
+      <div class="event">
+
+        <img
+          class="event-image"
+          src="photos/photo-5.jpg"
+          alt="Exoplanets and Hycean Worlds at Cambridge"
+        >
+
+        <div class="event-content">
+
+          <p class="event-title">
+            <a href="https://lnkd.in/p/gABCaJy3">
+              Exoplanets — Hycean Worlds, Institute of Astronomy, Cambridge.
+            </a>
+          </p>
+
+          <p class="event-meta">
+            June 2026 · Cambridge, UK
+          </p>
+
+        </div>
+
+      </div>
+
+    </article>
+
+
+  </section>
+
 </main>
+
 </body>
 </html>
