@@ -10,10 +10,8 @@
   :root {
     --text: #111111;
     --muted: #777777;
-    --line: #dcdcdc;
+    --line: #d9d9d9;
     --blue: #0645ad;
-    --bg: #ffffff;
-    --card: #fafafa;
   }
 
   * {
@@ -22,7 +20,7 @@
 
   body {
     margin: 0;
-    background: var(--bg);
+    background: #ffffff;
     color: var(--text);
     font-family:
       -apple-system,
@@ -49,7 +47,6 @@
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-
     gap: 12px;
   }
 
@@ -61,7 +58,7 @@
   }
 
   .site-title a {
-    color: var(--text);
+    color: #111111;
     text-decoration: none;
   }
 
@@ -70,7 +67,6 @@
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-
     margin: 0;
     padding: 0;
   }
@@ -90,21 +86,21 @@
   main {
     max-width: 1000px;
     margin: 0 auto;
-    padding: 56px 24px 100px;
+    padding: 50px 24px 80px;
   }
 
   h1 {
     font-size: 28px;
     line-height: 1.2;
-    margin: 0 0 12px;
+    margin: 0 0 10px;
     letter-spacing: -0.02em;
   }
 
   .intro {
-    max-width: 660px;
+    max-width: 650px;
     font-size: 15px;
-    line-height: 1.75;
-    margin: 0 0 64px;
+    line-height: 1.7;
+    margin: 0 0 52px;
     color: #333333;
   }
 
@@ -112,22 +108,17 @@
 
   .timeline {
     position: relative;
-    margin-top: 20px;
   }
 
-  /* Vertical line */
-
+  /* center line */
   .timeline::before {
     content: "";
     position: absolute;
-
     top: 0;
     bottom: 0;
     left: 50%;
-
     width: 1px;
     background: var(--line);
-
     transform: translateX(-50%);
   }
 
@@ -135,13 +126,18 @@
     position: relative;
 
     display: grid;
-    grid-template-columns: 1fr 90px 1fr;
-    align-items: center;
+    grid-template-columns: minmax(0, 1fr) 70px minmax(0, 1fr);
 
-    margin-bottom: 72px;
+    align-items: start;
+
+    margin-bottom: 46px;
   }
 
-  /* ---------------- Date ---------------- */
+  .timeline-item:last-child {
+    margin-bottom: 0;
+  }
+
+  /* ---------------- Year ---------------- */
 
   .timeline-date {
     grid-column: 2;
@@ -149,53 +145,71 @@
 
     justify-self: center;
 
+    position: relative;
+    z-index: 2;
+
+    width: 52px;
+    height: 52px;
+
     display: flex;
     align-items: center;
     justify-content: center;
 
-    width: 62px;
-    height: 62px;
-
     background: #ffffff;
-    border: 1px solid #cfcfcf;
+
+    border: 1px solid #cccccc;
     border-radius: 50%;
 
-    font-size: 13px;
+    font-size: 11px;
     font-weight: 600;
-
-    z-index: 2;
+    letter-spacing: -0.02em;
   }
 
-  /* ---------------- Event block ---------------- */
+  /* IMPORTANT:
+     No second dot here.
+     The year circle itself is the timeline marker.
+  */
+
+  /* ---------------- Event ---------------- */
 
   .event {
-    display: grid;
-    gap: 18px;
-
     width: 100%;
+  }
+
+  .timeline-item:nth-child(odd) .event {
+    grid-column: 3;
+    grid-row: 1;
+    padding-left: 24px;
+  }
+
+  .timeline-item:nth-child(even) .event {
+    grid-column: 1;
+    grid-row: 1;
+    padding-right: 24px;
   }
 
   .event-image {
     width: 100%;
-    height: 250px;
+    height: 205px;
 
     object-fit: cover;
 
-    border-radius: 8px;
     display: block;
+
+    border-radius: 7px;
 
     background: #f3f3f3;
   }
 
   .event-content {
-    padding: 0 4px;
+    padding: 13px 2px 0;
   }
 
   .event-title {
-    margin: 0 0 7px;
+    margin: 0 0 5px;
 
     font-size: 15px;
-    line-height: 1.55;
+    line-height: 1.5;
     font-weight: 500;
   }
 
@@ -212,49 +226,11 @@
     margin: 0;
 
     font-size: 12px;
-    line-height: 1.6;
-
+    line-height: 1.5;
     color: var(--muted);
   }
 
-  /* ---------------- Alternating sides ---------------- */
-
-  .timeline-item:nth-child(odd) .event {
-    grid-column: 1;
-    grid-row: 1;
-
-    padding-right: 38px;
-  }
-
-  .timeline-item:nth-child(even) .event {
-    grid-column: 3;
-    grid-row: 1;
-
-    padding-left: 38px;
-  }
-
-  /* ---------------- Small connector dots ---------------- */
-
-  .timeline-item::after {
-    content: "";
-
-    position: absolute;
-
-    top: 50%;
-    left: 50%;
-
-    width: 7px;
-    height: 7px;
-
-    background: #111111;
-    border-radius: 50%;
-
-    transform: translate(-50%, -50%);
-
-    z-index: 3;
-  }
-
-  /* ---------------- Responsive ---------------- */
+  /* ---------------- Mobile ---------------- */
 
   @media (max-width: 700px) {
 
@@ -271,7 +247,7 @@
     }
 
     main {
-      padding: 42px 20px 70px;
+      padding: 40px 20px 70px;
     }
 
     h1 {
@@ -279,10 +255,8 @@
     }
 
     .intro {
-      margin-bottom: 48px;
+      margin-bottom: 42px;
     }
-
-    /* Move timeline to left */
 
     .timeline::before {
       left: 18px;
@@ -291,40 +265,32 @@
 
     .timeline-item {
       display: block;
-
-      padding-left: 52px;
-      margin-bottom: 54px;
+      padding-left: 48px;
+      margin-bottom: 42px;
     }
 
     .timeline-date {
       position: absolute;
-
       top: 0;
       left: -1px;
 
       width: 38px;
       height: 38px;
 
-      font-size: 10px;
-    }
-
-    .timeline-item::after {
-      top: 19px;
-      left: 18px;
-
-      width: 6px;
-      height: 6px;
+      font-size: 9px;
     }
 
     .timeline-item:nth-child(odd) .event,
     .timeline-item:nth-child(even) .event {
-      display: block;
       padding: 0;
     }
 
     .event-image {
-      height: 210px;
-      margin-bottom: 16px;
+      height: 200px;
+    }
+
+    .event-content {
+      padding-top: 11px;
     }
   }
 </style>
@@ -359,41 +325,38 @@
   <h1>Events</h1>
 
   <p class="intro">
-    I do events, as well as training workshops. I appreciate every opportunity
-    to share my work.
+    I speak at conferences and run training workshops. I appreciate every
+    opportunity to share my work.
   </p>
 
 
   <section class="timeline">
 
 
-    <!-- 2022 -->
+    <!-- 2026 — June -->
 
     <article class="timeline-item">
 
-      <div class="timeline-date">
-        2022
-      </div>
+      <div class="timeline-date">2026</div>
 
       <div class="event">
 
         <img
           class="event-image"
-          src="photos/photo-1.jpg"
-          alt="Women in GRSS at IGARSS 2022"
+          src="photos/photo-5.jpg"
+          alt="Exoplanets - Hycean Worlds at Cambridge"
         >
 
         <div class="event-content">
 
           <p class="event-title">
-            <a href="https://lnkd.in/p/gFgpSHsr">
-              Women in GRSS with Rebecca Moore, Director of Google Earth,
-              Earth Engine & Outreach.
+            <a href="https://lnkd.in/p/gABCaJy3">
+              Exoplanets — Hycean Worlds, Institute of Astronomy, Cambridge.
             </a>
           </p>
 
           <p class="event-meta">
-            IGARSS 2022 · Kuala Lumpur, Malaysia
+            June 2026 · Cambridge, UK
           </p>
 
         </div>
@@ -403,83 +366,11 @@
     </article>
 
 
-    <!-- 2024 -->
+    <!-- 2026 — ICRA -->
 
     <article class="timeline-item">
 
-      <div class="timeline-date">
-        2024
-      </div>
-
-      <div class="event">
-
-        <img
-          class="event-image"
-          src="photos/photo-3.jpg"
-          alt="The Fifth Elephant Annual Conference 2024"
-        >
-
-        <div class="event-content">
-
-          <p class="event-title">
-            <a href="https://hasgeek.com/fifthelephant/2024/sub/unifying-senses-the-evolution-technology-and-impac-tP7tQnT9y2KLKDN9fCuR4">
-              The Fifth Elephant Annual Conference 2024.
-            </a>
-          </p>
-
-          <p class="event-meta">
-            HasGeek 2024 · Bengaluru, India
-          </p>
-
-        </div>
-
-      </div>
-
-    </article>
-
-
-    <!-- 2025 -->
-
-    <article class="timeline-item">
-
-      <div class="timeline-date">
-        2025
-      </div>
-
-      <div class="event">
-
-        <img
-          class="event-image"
-          src="photos/photo-2.jpg"
-          alt="The Fifth Elephant Annual Conference 2025"
-        >
-
-        <div class="event-content">
-
-          <p class="event-title">
-            <a href="https://lnkd.in/p/gWysbmQq">
-              The Fifth Elephant Annual Conference 2025.
-            </a>
-          </p>
-
-          <p class="event-meta">
-            HasGeek 2025 · Bengaluru, India
-          </p>
-
-        </div>
-
-      </div>
-
-    </article>
-
-
-    <!-- 2026 -->
-
-    <article class="timeline-item">
-
-      <div class="timeline-date">
-        2026
-      </div>
+      <div class="timeline-date">2026</div>
 
       <div class="event">
 
@@ -509,32 +400,97 @@
     </article>
 
 
-    <!-- June 2026 -->
+    <!-- 2025 -->
 
     <article class="timeline-item">
 
-      <div class="timeline-date">
-        2026
-      </div>
+      <div class="timeline-date">2025</div>
 
       <div class="event">
 
         <img
           class="event-image"
-          src="photos/photo-5.jpg"
-          alt="Exoplanets and Hycean Worlds at Cambridge"
+          src="photos/photo-2.jpg"
+          alt="The Fifth Elephant Annual Conference 2025"
         >
 
         <div class="event-content">
 
           <p class="event-title">
-            <a href="https://lnkd.in/p/gABCaJy3">
-              Exoplanets — Hycean Worlds, Institute of Astronomy, Cambridge.
+            <a href="https://lnkd.in/p/gWysbmQq">
+              The Fifth Elephant Annual Conference 2025.
             </a>
           </p>
 
           <p class="event-meta">
-            June 2026 · Cambridge, UK
+            HasGeek 2025 · Bengaluru, India
+          </p>
+
+        </div>
+
+      </div>
+
+    </article>
+
+
+    <!-- 2024 -->
+
+    <article class="timeline-item">
+
+      <div class="timeline-date">2024</div>
+
+      <div class="event">
+
+        <img
+          class="event-image"
+          src="photos/photo-3.jpg"
+          alt="The Fifth Elephant Annual Conference 2024"
+        >
+
+        <div class="event-content">
+
+          <p class="event-title">
+            <a href="https://hasgeek.com/fifthelephant/2024/sub/unifying-senses-the-evolution-technology-and-impac-tP7tQnT9y2KLKDN9fCuR4">
+              The Fifth Elephant Annual Conference 2024.
+            </a>
+          </p>
+
+          <p class="event-meta">
+            HasGeek 2024 · Bengaluru, India
+          </p>
+
+        </div>
+
+      </div>
+
+    </article>
+
+
+    <!-- 2022 -->
+
+    <article class="timeline-item">
+
+      <div class="timeline-date">2022</div>
+
+      <div class="event">
+
+        <img
+          class="event-image"
+          src="photos/photo-1.jpg"
+          alt="Women in GRSS at IGARSS 2022"
+        >
+
+        <div class="event-content">
+
+          <p class="event-title">
+            <a href="https://lnkd.in/p/gFgpSHsr">
+              Women in GRSS with Rebecca Moore, Director of Google Earth,
+              Earth Engine & Outreach.
+            </a>
+          </p>
+
+          <p class="event-meta">
+            IGARSS 2022 · Kuala Lumpur, Malaysia
           </p>
 
         </div>
