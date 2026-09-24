@@ -1,37 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Events — Bhumika Makwana</title>
+
 <style>
+  :root {
+    --text: #111111;
+    --muted: #777777;
+    --line: #dddddd;
+    --blue: #0645ad;
+    --background: #ffffff;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    background: var(--background);
+  }
+
+  body {
+    margin: 0;
+    background: var(--background);
+    color: var(--text);
+    font-family:
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      Helvetica,
+      Arial,
+      sans-serif;
+  }
+
+  /* =========================
+     HEADER
+  ========================= */
+
+  header {
+    background: #ffffff;
+    padding: 20px 24px;
+    border-bottom: 1px solid #eaeaea;
+  }
+
+  .header-inner {
+    max-width: 900px;
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .site-title {
+    font-size: 17px;
+    font-weight: 600;
+    margin: 0;
+    white-space: nowrap;
+  }
+
+  .site-title a {
+    color: #111111;
+    text-decoration: none;
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 20px;
+
+    margin: 0;
+    padding: 0;
+  }
+
+  nav a {
+    color: var(--blue);
+    text-decoration: none;
+    font-size: 13px;
+  }
+
+  nav a:hover {
+    text-decoration: underline;
+  }
+
+  /* =========================
+     MAIN
+  ========================= */
+
+  main {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 48px 24px 70px;
+  }
+
+  h1 {
+    margin: 0 0 10px;
+
+    font-size: 28px;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  .intro {
+    max-width: 650px;
+
+    margin: 0 0 44px;
+
+    font-size: 15px;
+    line-height: 1.7;
+
+    color: #333333;
+  }
+
+  /* =========================
+     TIMELINE
+  ========================= */
+
   .timeline {
     position: relative;
-    margin-top: 28px;
+    width: 100%;
   }
 
+  /* Vertical line */
   .timeline::before {
     content: "";
+
     position: absolute;
-    left: 43px;
+
     top: 0;
     bottom: 0;
+    left: 43px;
+
     width: 1px;
-    background: #dddddd;
+
+    background: var(--line);
   }
 
+  /* One year row */
   .timeline-year {
     position: relative;
+
     display: grid;
-    grid-template-columns: 86px 1fr;
-    gap: 28px;
+    grid-template-columns: 86px minmax(0, 1fr);
+
+    gap: 24px;
+
     margin-bottom: 34px;
   }
+
+  .timeline-year:last-child {
+    margin-bottom: 0;
+  }
+
+  /* =========================
+     YEAR CIRCLE
+  ========================= */
 
   .year {
     width: 52px;
     height: 52px;
-    border: 1px solid #cccccc;
-    border-radius: 50%;
-    background: #fff;
 
     display: flex;
     align-items: center;
     justify-content: center;
+
+    border: 1px solid #cccccc;
+    border-radius: 50%;
+
+    background: #ffffff;
 
     font-size: 11px;
     font-weight: 600;
@@ -40,37 +184,66 @@
     z-index: 2;
   }
 
+  /* =========================
+     EVENTS
+  ========================= */
+
   .year-events {
+    min-width: 0;
+
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
+
     gap: 24px;
   }
 
   .event {
+    min-width: 0;
+
     display: grid;
-    grid-template-columns: 140px 1fr;
+    grid-template-columns: 140px minmax(0, 1fr);
+
     gap: 14px;
+
     align-items: start;
   }
+
+  /* =========================
+     IMAGE
+  ========================= */
 
   .event img {
     width: 140px;
     height: 92px;
-    object-fit: cover;
-    border-radius: 6px;
+
     display: block;
+
+    object-fit: cover;
+
+    border-radius: 6px;
+
     background: #f3f3f3;
+  }
+
+  /* =========================
+     TEXT
+  ========================= */
+
+  .event-content {
+    min-width: 0;
+    padding-top: 1px;
   }
 
   .event-title {
     margin: 0 0 5px;
+
     font-size: 13px;
     line-height: 1.45;
     font-weight: 500;
   }
 
   .event-title a {
-    color: #0645ad;
+    color: var(--blue);
     text-decoration: none;
   }
 
@@ -80,45 +253,92 @@
 
   .event-meta {
     margin: 0;
-    color: #888;
+
     font-size: 11px;
-    line-height: 1.4;
+    line-height: 1.45;
+
+    color: var(--muted);
   }
+
+  /* =========================
+     TABLET
+  ========================= */
 
   @media (max-width: 850px) {
+
     .year-events {
       grid-template-columns: 1fr;
+      gap: 22px;
     }
+
   }
 
+  /* =========================
+     MOBILE
+  ========================= */
+
   @media (max-width: 600px) {
+
+    header {
+      padding: 18px 20px;
+    }
+
+    .header-inner {
+      align-items: flex-start;
+    }
+
+    nav ul {
+      gap: 14px;
+    }
+
+    main {
+      padding: 40px 20px 60px;
+    }
+
+    h1 {
+      font-size: 25px;
+    }
+
+    .intro {
+      margin-bottom: 38px;
+    }
+
     .timeline::before {
       left: 20px;
     }
 
     .timeline-year {
-      grid-template-columns: 46px 1fr;
-      gap: 18px;
+      grid-template-columns: 42px minmax(0, 1fr);
+      gap: 16px;
+
+      margin-bottom: 30px;
     }
 
     .year {
       width: 40px;
       height: 40px;
+
       font-size: 9px;
     }
 
+    .year-events {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
     .event {
-      grid-template-columns: 110px 1fr;
+      grid-template-columns: 105px minmax(0, 1fr);
       gap: 12px;
     }
 
     .event img {
-      width: 110px;
-      height: 75px;
+      width: 105px;
+      height: 72px;
     }
 
     .event-title {
       font-size: 12px;
+      line-height: 1.45;
     }
 
     .event-meta {
@@ -126,3 +346,299 @@
     }
   }
 </style>
+</head>
+
+
+<body>
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header>
+
+  <div class="header-inner">
+
+    <div class="site-title">
+      <a href="/dossier/">Bhumika Makwana</a>
+    </div>
+
+    <nav>
+      <ul>
+        <li>
+          <a href="/dossier/">Home</a>
+        </li>
+
+        <li>
+          <a href="/dossier/archive/">Archive</a>
+        </li>
+
+        <li>
+          <a href="/dossier/events/">Events</a>
+        </li>
+
+        <li>
+          <a href="/dossier/research/">Research</a>
+        </li>
+
+        <li>
+          <a href="/dossier/wanderlust/">Wanderlust</a>
+        </li>
+
+        <li>
+          <a href="/dossier/contact/">Contact</a>
+        </li>
+      </ul>
+    </nav>
+
+  </div>
+
+</header>
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<main>
+
+  <h1>Events</h1>
+
+  <p class="intro">
+    I speak at conferences and run training workshops. I appreciate every
+    opportunity to share my work.
+  </p>
+
+
+  <!-- =========================
+       TIMELINE
+  ========================= -->
+
+  <section class="timeline">
+
+
+    <!-- =====================
+         2026
+    ====================== -->
+
+    <div class="timeline-year">
+
+      <div class="year">
+        2026
+      </div>
+
+      <div class="year-events">
+
+
+        <!-- Cambridge -->
+
+        <article class="event">
+
+          <img
+            src="../photos/photo-5.jpg"
+            alt="Exoplanets — Hycean Worlds at Cambridge"
+          >
+
+          <div class="event-content">
+
+            <p class="event-title">
+              <a
+                href="https://lnkd.in/p/gABCaJy3"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Exoplanets — Hycean Worlds, Institute of Astronomy,
+                Cambridge.
+              </a>
+            </p>
+
+            <p class="event-meta">
+              June 2026 · Cambridge, UK
+            </p>
+
+          </div>
+
+        </article>
+
+
+        <!-- ICRA -->
+
+        <article class="event">
+
+          <img
+            src="../photos/photo-4.jpg"
+            alt="ICRA 2026 presentation"
+          >
+
+          <div class="event-content">
+
+            <p class="event-title">
+              <a
+                href="https://space-robotics-workshop.github.io/icra2026/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Presented our work at the IEEE International Conference
+                on Robotics and Automation (ICRA).
+              </a>
+            </p>
+
+            <p class="event-meta">
+              ICRA 2026 · Vienna, Austria
+            </p>
+
+          </div>
+
+        </article>
+
+
+      </div>
+
+    </div>
+
+
+    <!-- =====================
+         2025
+    ====================== -->
+
+    <div class="timeline-year">
+
+      <div class="year">
+        2025
+      </div>
+
+      <div class="year-events">
+
+
+        <article class="event">
+
+          <img
+            src="../photos/photo-2.jpg"
+            alt="The Fifth Elephant Annual Conference 2025"
+          >
+
+          <div class="event-content">
+
+            <p class="event-title">
+              <a
+                href="https://lnkd.in/p/gWysbmQq"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                The Fifth Elephant Annual Conference 2025.
+              </a>
+            </p>
+
+            <p class="event-meta">
+              HasGeek 2025 · Bengaluru, India
+            </p>
+
+          </div>
+
+        </article>
+
+
+      </div>
+
+    </div>
+
+
+    <!-- =====================
+         2024
+    ====================== -->
+
+    <div class="timeline-year">
+
+      <div class="year">
+        2024
+      </div>
+
+      <div class="year-events">
+
+
+        <article class="event">
+
+          <img
+            src="../photos/photo-3.jpg"
+            alt="The Fifth Elephant Annual Conference 2024"
+          >
+
+          <div class="event-content">
+
+            <p class="event-title">
+              <a
+                href="https://hasgeek.com/fifthelephant/2024/sub/unifying-senses-the-evolution-technology-and-impac-tP7tQnT9y2KLKDN9fCuR4"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                The Fifth Elephant Annual Conference 2024.
+              </a>
+            </p>
+
+            <p class="event-meta">
+              HasGeek 2024 · Bengaluru, India
+            </p>
+
+          </div>
+
+        </article>
+
+
+      </div>
+
+    </div>
+
+
+    <!-- =====================
+         2022
+    ====================== -->
+
+    <div class="timeline-year">
+
+      <div class="year">
+        2022
+      </div>
+
+      <div class="year-events">
+
+
+        <article class="event">
+
+          <img
+            src="../photos/photo-1.jpg"
+            alt="Women in GRSS at IGARSS 2022"
+          >
+
+          <div class="event-content">
+
+            <p class="event-title">
+              <a
+                href="https://lnkd.in/p/gFgpSHsr"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Women in GRSS with Rebecca Moore, Director of Google
+                Earth, Earth Engine & Outreach.
+              </a>
+            </p>
+
+            <p class="event-meta">
+              IGARSS 2022 · Kuala Lumpur, Malaysia
+            </p>
+
+          </div>
+
+        </article>
+
+
+      </div>
+
+    </div>
+
+
+  </section>
+
+</main>
+
+</body>
+</html>
