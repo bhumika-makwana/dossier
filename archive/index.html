@@ -82,25 +82,6 @@
     border-bottom: none;
   }
 
-  /* Projects WITH images */
-
-  .entry.with-image {
-    display: grid;
-    grid-template-columns: 150px 1fr;
-    gap: 24px;
-  }
-
-  .entry-image {
-    width: 150px;
-    height: 110px;
-    object-fit: cover;
-    border-radius: 4px;
-    border: 1px solid #e5e5e5;
-    background: #f5f5f5;
-  }
-
-  /* Project content */
-
   .entry-content {
     min-width: 0;
   }
@@ -148,20 +129,6 @@
     color: #666666;
   }
 
-  /* Mobile */
-
-  @media (max-width: 600px) {
-    .entry.with-image {
-      grid-template-columns: 100px 1fr;
-      gap: 16px;
-    }
-
-    .entry-image {
-      width: 100px;
-      height: 85px;
-    }
-  }
-
   @media (max-width: 480px) {
     header {
       padding: 18px 20px;
@@ -175,16 +142,6 @@
     main {
       padding: 28px 20px 60px;
     }
-
-    .entry.with-image {
-      grid-template-columns: 1fr;
-      gap: 12px;
-    }
-
-    .entry-image {
-      width: 140px;
-      height: 95px;
-    }
   }
 </style>
 
@@ -194,6 +151,7 @@
 
 <header>
   <div class="header-inner">
+
 
 <div class="site-title">
   <a href="/dossier/">Bhumika Makwana</a>
@@ -218,9 +176,10 @@
 
   <h1>Tinker Tools</h1>
 
-  <!-- STRATA — NO IMAGE -->
+  <!-- STRATA -->
 
   <div class="entry">
+
 
 <div class="entry-content">
 
@@ -246,12 +205,12 @@
 
 </div>
 
+
   </div>
 
-  <!-- GRID SENSE — IMAGE -->
+  <!-- GRID SENSE -->
 
-  <div class="entry with-image">
-
+  <div class="entry">
 
 
 <div class="entry-content">
@@ -299,12 +258,12 @@
 
 </div>
 
+
   </div>
 
-  <!-- PROJECT NANDA — IMAGE -->
+  <!-- PROJECT NANDA -->
 
-  <div class="entry with-image">
-
+  <div class="entry">
 
 <div class="entry-content">
 
@@ -341,16 +300,18 @@
 
 </div>
 
+
   </div>
 
-  <!-- POLYMORPH — NO IMAGE -->
+  <!-- POLYMORPH -->
 
   <div class="entry">
+
 
 <div class="entry-content">
 
   <h2>
-    <a 
+    <a
       href="https://github.com/ClostAI/SentinelKG/tree/v1.0.0"
       target="_blank"
       rel="noopener"
@@ -368,6 +329,7 @@
   </p>
 
 </div>
+
 
   </div>
 
