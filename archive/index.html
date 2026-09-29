@@ -1,21 +1,25 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Archive — Bhumika Makwana</title>
+
 <style>
-  body { 
+  body {
     margin: 0;
     background: #ffffff;
     color: #111111;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   }
+
   header {
     background: #ffffff;
     padding: 20px 24px;
     border-bottom: 1px solid #eaeaea;
   }
+
   .header-inner {
     max-width: 900px;
     margin: 0 auto;
@@ -25,16 +29,19 @@
     flex-wrap: wrap;
     gap: 12px;
   }
+
   .site-title {
     font-size: 17px;
     font-weight: 600;
     margin: 0;
     white-space: nowrap;
   }
+
   .site-title a {
     color: #111111;
     text-decoration: none;
   }
+
   nav ul {
     list-style: none;
     display: flex;
@@ -43,30 +50,35 @@
     margin: 0;
     padding: 0;
   }
+
   nav a {
     color: #0645ad;
     text-decoration: none;
     font-size: 13px;
   }
+
   nav a:hover {
     text-decoration: underline;
   }
+
   @media (max-width: 480px) {
-    header {
+    .header-inner {
       flex-direction: column;
       align-items: flex-start;
     }
   }
 
   main {
-    max-width: 700px;
+    max-width: 760px;
     margin: 0 auto;
     padding: 36px 24px 80px;
   }
+
   h1 {
     font-size: 22px;
     margin: 0 0 4px;
   }
+
   .page-subtitle {
     font-size: 14px;
     font-style: italic;
@@ -75,85 +87,280 @@
   }
 
   .entry {
-    margin: 0 0 40px;
-    padding-bottom: 32px;
+    display: grid;
+    grid-template-columns: 170px 1fr;
+    gap: 22px;
+    margin: 0 0 30px;
+    padding-bottom: 30px;
     border-bottom: 1px solid #eaeaea;
   }
+
   .entry:last-child {
     border-bottom: none;
   }
+
+  .entry-image {
+    width: 170px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #e5e5e5;
+    background: #f5f5f5;
+  }
+
   .entry h2 {
     font-size: 16px;
     font-weight: 600;
     line-height: 1.4;
     margin: 0 0 6px;
   }
+
   .entry h2 a {
     color: #0645ad;
     text-decoration: none;
   }
+
   .entry h2 a:hover {
     text-decoration: underline;
   }
+
   .entry .link {
     font-size: 13px;
-    margin: 0 0 14px;
+    margin: 0 0 10px;
   }
+
   .entry .link a {
     color: #0645ad;
     text-decoration: none;
   }
+
   .entry .link a:hover {
     text-decoration: underline;
   }
+
   .entry p {
-    font-size: 14.5px;
-    line-height: 1.75;
+    font-size: 14px;
+    line-height: 1.65;
     color: #222222;
-    margin: 0;
+    margin: 0 0 8px;
+  }
+
+  .entry .meta {
+    font-size: 12.5px;
+    color: #666666;
+    margin-bottom: 10px;
+  }
+
+  .entry .meta a {
+    color: #0645ad;
+    text-decoration: none;
+  }
+
+  @media (max-width: 650px) {
+    .entry {
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .entry-image {
+      width: 100%;
+      height: 180px;
+    }
   }
 </style>
+
 </head>
+
 <body>
+
 <header>
   <div class="header-inner">
-    <div class="site-title"><a href="/dossier/">Bhumika Makwana</a></div>
-    <nav>
-      <ul>
-        <li><a href="/dossier/">Home</a></li>
-        <li><a href="/dossier/archive/">Archive</a></li>
-        <li><a href="/dossier/Events/">Events</a></li>
-        <li><a href="/dossier/research/">Research</a></li>
-        <li><a href="/dossier/wanderlust/">Wanderlust</a></li>
-        <li><a href="/dossier/contact/">Contact</a></li>
-      </ul>
-    </nav>
+
+```
+<div class="site-title">
+  <a href="/dossier/">Bhumika Makwana</a>
+</div>
+
+<nav>
+  <ul>
+    <li><a href="/dossier/">Home</a></li>
+    <li><a href="/dossier/archive/">Archive</a></li>
+    <li><a href="/dossier/Events/">Events</a></li>
+    <li><a href="/dossier/research/">Research</a></li>
+    <li><a href="/dossier/wanderlust/">Wanderlust</a></li>
+    <li><a href="/dossier/contact/">Contact</a></li>
+  </ul>
+</nav>
+```
+
   </div>
 </header>
 
 <main>
+
   <h1>Tinker Tools</h1>
+
   <br />
+
+  <!-- STRATA -->
+
   <div class="entry">
-    <h2><a href="https://github.com/bhumika-makwana/Strata/tree/main">Strata: Mechanistically informed model structures for transcriptomics perturbation effect prediction [Ongoing]</a></h2>
-    <p>Developing a new attention architecture for predicting cellular responses to genetic perturbations. Strata makes biological structure a learnable component of attention, rather than a fixed input, allowing the model to discover and revise regulatory relationships directly from perturbational data. The research explores whether a different inductive bias can help models represent long-range, multi-step information flow in biological systems, rather than learning correlations between genes in isolation. The broader goal is to develop new model structures from first principles that better capture the rules of cellular systems and generalize to biological configurations unseen during training.</p>
+
+```
+<img
+  class="entry-image"
+  src="/dossier/images/strata.png"
+  alt="Strata — mechanistically informed model structures"
+>
+
+<div>
+
+  <h2>
+    <a href="https://github.com/bhumika-makwana/Strata/tree/main">
+      Strata: Mechanistically informed model structures for transcriptomics perturbation effect prediction [Ongoing]
+    </a>
+  </h2>
+
+  <p>
+    Developing a new attention architecture for predicting cellular responses to genetic perturbations.
+    Strata makes biological structure a learnable component of attention, rather than a fixed input,
+    allowing the model to discover and revise regulatory relationships directly from perturbational data.
+    The research explores whether a different inductive bias can help models represent long-range,
+    multi-step information flow in biological systems, rather than learning correlations between genes
+    in isolation. The broader goal is to develop new model structures from first principles that better
+    capture the rules of cellular systems and generalize to biological configurations unseen during training.
+  </p>
+
+</div>
+```
+
   </div>
+
+  <!-- GRID SENSE -->
+
   <div class="entry">
-    <h2><a href="https://www.linkedin.com/posts/energentic-2025-winners-beckn-ugcPost-7365710088772255749-2ESM/">Ener'gentic Hackathon 2025 Winner [Aug'25]</a></h2>
-    <p class="link"><a href="https://www.youtube.com/watch?v=WZRgmIWUVUU">View demo →</a></p>
-    <p class="meta"> <strong> Organised by <a href=https://beckn.io/>Beckn</a>, with <a href="https://about.google/">Google India</a> and <a href="https://www.antler.co/location/india">Antler </strong></a>, presented at Stanford University.</p>
-    <p>India is adding renewables at one of the fastest rates in the world, but our grids still struggle with peak demand surges, costly backup power, and underutilised clean energy. Towards an effort to solve for this, we built <strong>Gridsense</strong> - Multi-agent demand response marketplace for residential and small commercial energy users, powered by AI. The system discovers flexible loads, reasons over dynamic grid signals, negotiates bids, and automates load adjustments across transactions systems. </p>
+
+```
+<img
+  class="entry-image"
+  src="/dossier/images/hack.jpeg"
+  alt="GridSense demand response marketplace"
+>
+
+<div>
+
+  <h2>
+    <a href="https://www.linkedin.com/posts/energentic-2025-winners-beckn-ugcPost-7365710088772255749-2ESM/">
+      Ener'gentic Hackathon 2025 Winner [Aug'25]
+    </a>
+  </h2>
+
+  <p class="link">
+    <a href="https://www.youtube.com/watch?v=WZRgmIWUVUU">
+      View demo →
+    </a>
+  </p>
+
+  <p class="meta">
+    <strong>
+      Organised by
+      <a href="https://beckn.io/">Beckn</a>,
+      with
+      <a href="https://about.google/">Google India</a>
+      and
+      <a href="https://www.antler.co/location/india">Antler</a>,
+      presented at Stanford University.
+    </strong>
+  </p>
+
+  <p>
+    India is adding renewables at one of the fastest rates in the world, but our grids still struggle
+    with peak demand surges, costly backup power, and underutilised clean energy. Towards an effort
+    to solve for this, we built <strong>GridSense</strong> — a multi-agent demand response marketplace
+    for residential and small commercial energy users, powered by AI. The system discovers flexible
+    loads, reasons over dynamic grid signals, negotiates bids, and automates load adjustments across
+    transaction systems.
+  </p>
+
+</div>
+```
+
   </div>
+
+  <!-- PROJECT NANDA -->
+
   <div class="entry">
-    <h2><a href="https://github.com/projnanda/projnanda">Democratizing AI to ensure an open, safe, and equitable future [June'25]</a></h2>
-    <p class="meta"><strong>With Project NANDA, under Prof. <a href="https://www.linkedin.com/in/raskar/">Ramesh Raskar (MIT Media Lab)</a></strong></p>
-    <p>Built selective context retrieval and stateful tool execution for LLM agents over MCP. The server exposes persistent WhatsApp conversations as a tool-accessible environment, enabling LLM agents to retrieve relevant historical context, perform stateful messaging actions, process multimodal messages, and operate concurrently across independent conversational sessions.</p>
+
+```
+<img
+  class="entry-image"
+  src="/dossier/images/nanda.jpeg"
+  alt="Project NANDA"
+>
+
+<div>
+
+  <h2>
+    <a href="https://github.com/projnanda/projnanda">
+      Democratizing AI to ensure an open, safe, and equitable future [June'25]
+    </a>
+  </h2>
+
+  <p class="meta">
+    <strong>
+      With Project NANDA, under
+      <a href="https://www.linkedin.com/in/raskar/">
+        Prof. Ramesh Raskar (MIT Media Lab)
+      </a>
+    </strong>
+  </p>
+
+  <p>
+    Built selective context retrieval and stateful tool execution for LLM agents over MCP.
+    The server exposes persistent WhatsApp conversations as a tool-accessible environment,
+    enabling LLM agents to retrieve relevant historical context, perform stateful messaging
+    actions, process multimodal messages, and operate concurrently across independent
+    conversational sessions.
+  </p>
+
+</div>
+```
+
   </div>
+
+  <!-- POLYMORPH -->
+
   <div class="entry">
-    <h2><a href="https://github.com/ClostAI/SentinelKG/tree/v1.0.0">Multi-channel SME chatbot with self-healing knowledge graphs [March'25 - May'25]</a></h2>
-    <p>Built Polymorph, an agent platform for persona-driven LLMs deployed across web and WhatsApp. Designed the agent harness around a stateful, self-updating knowledge graph, continuously ingesting business documents, FAQs, and conversation logs to update context and refresh personas. The architecture incorporated self-learning loops for agents to adapt as underlying knowledge and user interactions changed.</p>
+
+```
+<img
+  class="entry-image"
+  src="/dossier/images/polymorph.png"
+  alt="Polymorph self-healing knowledge graph"
+>
+
+<div>
+
+  <h2>
+    <a href="https://github.com/ClostAI/SentinelKG/tree/v1.0.0">
+      Multi-channel SME chatbot with self-healing knowledge graphs [March'25 – May'25]
+    </a>
+  </h2>
+
+  <p>
+    Built Polymorph, an agent platform for persona-driven LLMs deployed across web and WhatsApp.
+    Designed the agent harness around a stateful, self-updating knowledge graph, continuously
+    ingesting business documents, FAQs, and conversation logs to update context and refresh personas.
+    The architecture incorporated self-learning loops for agents to adapt as underlying knowledge
+    and user interactions changed.
+  </p>
+
+</div>
+```
+
   </div>
 
 </main>
+
 </body>
 </html>
