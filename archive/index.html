@@ -73,9 +73,6 @@
   }
 
   .entry {
-    display: grid;
-    grid-template-columns: 150px 1fr;
-    gap: 24px;
     margin: 0 0 32px;
     padding-bottom: 32px;
     border-bottom: 1px solid #eaeaea;
@@ -85,6 +82,14 @@
     border-bottom: none;
   }
 
+  /* Projects WITH images */
+
+  .entry.with-image {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 24px;
+  }
+
   .entry-image {
     width: 150px;
     height: 110px;
@@ -92,6 +97,12 @@
     border-radius: 4px;
     border: 1px solid #e5e5e5;
     background: #f5f5f5;
+  }
+
+  /* Project content */
+
+  .entry-content {
+    min-width: 0;
   }
 
   .entry h2 {
@@ -137,8 +148,10 @@
     color: #666666;
   }
 
+  /* Mobile */
+
   @media (max-width: 600px) {
-    .entry {
+    .entry.with-image {
       grid-template-columns: 100px 1fr;
       gap: 16px;
     }
@@ -163,7 +176,7 @@
       padding: 28px 20px 60px;
     }
 
-    .entry {
+    .entry.with-image {
       grid-template-columns: 1fr;
       gap: 12px;
     }
@@ -182,7 +195,6 @@
 <header>
   <div class="header-inner">
 
-```
 <div class="site-title">
   <a href="/dossier/">Bhumika Makwana</a>
 </div>
@@ -197,7 +209,7 @@
     <li><a href="/dossier/contact/">Contact</a></li>
   </ul>
 </nav>
-
+```
 
   </div>
 </header>
@@ -206,17 +218,18 @@
 
   <h1>Tinker Tools</h1>
 
-  <!-- STRATA -->
+  <!-- STRATA — NO IMAGE -->
 
   <div class="entry">
 
-
-
-
-<div>
+<div class="entry-content">
 
   <h2>
-    <a href="https://github.com/bhumika-makwana/Strata/tree/main" target="_blank" rel="noopener">
+    <a
+      href="https://github.com/bhumika-makwana/Strata/tree/main"
+      target="_blank"
+      rel="noopener"
+    >
       Strata: Mechanistically informed model structures for transcriptomics perturbation effect prediction [Ongoing]
     </a>
   </h2>
@@ -233,13 +246,11 @@
 
 </div>
 
-
   </div>
 
-  <!-- GRID SENSE -->
+  <!-- GRID SENSE — IMAGE -->
 
-  <div class="entry">
-
+  <div class="entry with-image">
 
 <img
   class="entry-image"
@@ -247,7 +258,7 @@
   alt="GridSense demand response marketplace"
 >
 
-<div>
+<div class="entry-content">
 
   <h2>
     <a
@@ -292,13 +303,11 @@
 
 </div>
 
-
   </div>
 
-  <!-- PROJECT NANDA -->
+  <!-- PROJECT NANDA — IMAGE -->
 
-  <div class="entry">
-
+  <div class="entry with-image">
 
 <img
   class="entry-image"
@@ -306,7 +315,7 @@
   alt="Project NANDA"
 >
 
-<div>
+<div class="entry-content">
 
   <h2>
     <a
@@ -341,15 +350,13 @@
 
 </div>
 
-
   </div>
 
-  <!-- POLYMORPH -->
+  <!-- POLYMORPH — NO IMAGE -->
 
   <div class="entry">
 
-
-<div>
+<div class="entry-content">
 
   <h2>
     <a
