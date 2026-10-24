@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
 <title>Bhumika Makwana</title>
 <style>
   body {
@@ -78,6 +79,60 @@
   main a:hover {
     text-decoration: underline;
   }
+
+  .layout {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 36px 24px 80px;
+    display: grid;
+    grid-template-columns: 220px minmax(0, 700px);
+    gap: 40px;
+    justify-content: center;
+    align-items: start;
+  }
+  .layout main {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+
+
+  .story {
+    position: relative;
+    align-self: stretch;
+  }
+  .plate {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0;
+  }
+  .plate canvas {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+  }
+  .plate figcaption {
+    margin-top: 6px;
+    font-size: 12px;
+    color: #666666;
+    text-align: center;
+  }
+  @media (max-width: 760px) {
+    .layout {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0;
+      padding-top: 24px;
+    }
+    .story {
+      display: contents;
+    }
+    .plate {
+      position: static;
+      width: 170px;
+      margin: 4px auto 22px;
+    }
+  }
 </style>
 </head>
 <body>
@@ -97,6 +152,12 @@
   </div>
 </header>
 
+<div class="layout">
+<aside class="story" aria-label="Illustration">
+  <figure class="plate" data-scene="sphere" data-para="0">
+    <canvas role="img" aria-label="Abstract drawing of a sphere that is solid matter on one side and a glowing neural network on the other, bound by electron orbits: bringing AI to science."></canvas>
+  </figure>
+</aside>
 <main>
   <p>Hi! I'm Bhumika. At 27, I operate out of Bengaluru, India -  a city renowned for its rich heritage, vibrant culture, and thriving entrepreneurial ecosystem.</p>
 
@@ -114,5 +175,167 @@
   <p> I’m drawn to interesting technical challenges, ambitious ideas, and teams that enjoy figuring things out together. <a href="/dossier/contact/">Reach out</a> if you want to find a way to work together!</p>
   </p>
 </main>
+</div>
+
+<script>
+(function(){
+  const D=320,TAU=Math.PI*2,INK='#111111',PAPER='#ffffff',ACC='#0645ad',GREY='#8a8d93';
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const rng=s=>()=>{s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};
+  const clamp=(v,a,b)=>Math.max(a,Math.min(b,v)),ease=f=>f*f*(3-2*f);
+  let S=1,k=1,CUR=null;
+  function mkCanvas(){const c=document.createElement('canvas');c.width=CUR.width;c.height=CUR.height;const x=c.getContext('2d');x.setTransform(S,0,0,S,0,0);x.lineCap='round';x.lineJoin='round';return{c,x};}
+  function dots(x,box,dens,fn,R,color){x.fillStyle=color||INK;const sz=1.15/k,n=Math.round(box[2]*box[3]*k*k*dens);for(let i=0;i<n;i++){const px=box[0]+R()*box[2],py=box[1]+R()*box[3],p=fn(px,py);if(p>0&&R()<p){const s=sz*(.6+R()*.9);x.fillRect(px,py,s,s);}}}
+  const noise=(x,y)=>Math.sin(x*.05+Math.sin(y*.06)*2)*Math.cos(y*.045-x*.02)+.5*Math.sin(x*.11+y*.09);
+
+  // ---------- 0. AI x matter sphere ----------
+  const sphere=(()=>{const CX=160,CY=160,RAD=98,N=72,pts=[],gold=Math.PI*(3-Math.sqrt(5));
+    for(let i=0;i<N;i++){const y=1-(i+.5)/N*2,r=Math.sqrt(1-y*y),a=i*gold;pts.push([Math.cos(a)*r,y,Math.sin(a)*r]);}
+    const edges=[];pts.forEach((p,i)=>{pts.map((q,j)=>[j,(p[0]-q[0])**2+(p[1]-q[1])**2+(p[2]-q[2])**2]).filter(e=>e[0]!==i).sort((a,b)=>a[1]-b[1]).slice(0,3).forEach(([j])=>{if(!edges.some(e=>(e[0]===i&&e[1]===j)||(e[0]===j&&e[1]===i)))edges.push([i,j]);});});
+    const R0=rng(5),ph=edges.map(()=>R0());
+    const proj=(p,a,tl)=>{const c=Math.cos(a),s=Math.sin(a),X=p[0]*c+p[2]*s,Z=-p[0]*s+p[2]*c,ct=Math.cos(tl),st=Math.sin(tl);return[CX+X*RAD,CY+(p[1]*ct-Z*st)*RAD,p[1]*st+Z*ct,X];};
+    const vis=(X,Z)=>clamp((X+.15)/.55,0,1)*(Z>-.05?1:.25);
+    return{build(x){const R=rng(7);dots(x,[0,0,D,D],1.3,(px,py)=>{const dx=(px-CX)/RAD,dy=(py-CY)/RAD,rr=dx*dx+dy*dy;if(rr<1){const z=Math.sqrt(1-rr),light=Math.max(0,-dx*.6-dy*.5+z*.6),side=clamp((.25-dx)/.9,0,1);return side*(.12+.75*(1-light))*(.35+.65*side);}return rr<1.5?.05*Math.max(0,-dx)*(1.5-rr)*2:0;},R);
+        x.strokeStyle=INK;x.lineWidth=1.4;x.beginPath();x.arc(CX,CY,RAD,Math.PI*.42,Math.PI*1.58);x.stroke();x.lineWidth=.7;x.setLineDash([2,4]);x.beginPath();x.arc(CX,CY,RAD,-Math.PI*.58,Math.PI*.42);x.stroke();x.setLineDash([]);},
+      draw(x,t){const P=pts.map(p=>proj(p,t*.18,-.35));
+        edges.forEach(([i,j],e)=>{const A=P[i],B=P[j],v=Math.min(vis(A[3],A[2]),vis(B[3],B[2]));if(v<=.02)return;x.globalAlpha=v*.85;x.strokeStyle=INK;x.lineWidth=.7;x.beginPath();x.moveTo(A[0],A[1]);x.lineTo(B[0],B[1]);x.stroke();const f=(t*.6+ph[e])%1;x.globalAlpha=v*Math.sin(f*Math.PI);x.fillStyle=ACC;x.beginPath();x.arc(A[0]+(B[0]-A[0])*f,A[1]+(B[1]-A[1])*f,1.6,0,TAU);x.fill();});
+        P.forEach(p=>{const v=vis(p[3],p[2]);if(v<=.02)return;x.globalAlpha=v;x.beginPath();x.arc(p[0],p[1],p[2]>0?2.6:1.6,0,TAU);x.fillStyle=PAPER;x.fill();x.lineWidth=1;x.strokeStyle=ACC;x.stroke();});
+        x.globalAlpha=1;
+        [[-.5,1],[.7,1.4]].forEach(([rot,sp],i)=>{x.save();x.translate(CX,CY);x.rotate(rot);const ax=RAD*1.3,by=RAD*.36,e=t*sp*.6+i*2.4,front=Math.sin(e)>0;x.strokeStyle=INK;x.lineWidth=.8;x.beginPath();x.ellipse(0,0,ax,by,0,0,TAU);x.stroke();x.beginPath();x.arc(Math.cos(e)*ax,Math.sin(e)*by,front?3.4:2.4,0,TAU);x.fillStyle=front?ACC:PAPER;x.fill();x.lineWidth=1.2;x.strokeStyle=ACC;x.stroke();x.restore();});}};})();
+
+  // ---------- 1. honeycomb maze and a counting bee ----------
+  const hive=(()=>{const SZ=15,CX=160,CY=160,cells=[],key=(q,r)=>q+','+r;
+    for(let q=-5;q<=5;q++)for(let r=-5;r<=5;r++){if(Math.abs(q+r)>5)continue;const x=CX+SZ*Math.sqrt(3)*(q+r/2),y=CY+SZ*1.5*r;if(Math.hypot(x-CX,y-CY)>128)continue;cells.push({q,r,x,y});}
+    const map=new Map(cells.map(c=>[key(c.q,c.r),c]));let path=[],walls=new Set();
+    for(let seed=11;seed<60&&!path.length;seed++){const R=rng(seed);walls=new Set(cells.filter(()=>R()<.32).map(c=>key(c.q,c.r)));
+      const open=cells.filter(c=>!walls.has(key(c.q,c.r))),start=open.reduce((a,b)=>a.x<b.x?a:b),goal=open.reduce((a,b)=>a.x>b.x?a:b);
+      const prev=new Map([[key(start.q,start.r),null]]),qu=[start];
+      while(qu.length){const c=qu.shift();if(c===goal)break;[[1,0],[-1,0],[0,1],[0,-1],[1,-1],[-1,1]].forEach(([dq,dr])=>{const n=map.get(key(c.q+dq,c.r+dr));if(n&&!walls.has(key(n.q,n.r))&&!prev.has(key(n.q,n.r))){prev.set(key(n.q,n.r),c);qu.push(n);}});}
+      if(prev.has(key(goal.q,goal.r))){let c=goal;while(c){path.unshift(c);c=prev.get(key(c.q,c.r));}if(path.length<9)path=[];}}
+    const hex=(x,y,s)=>{const p=new Path2D();for(let i=0;i<6;i++){const a=Math.PI/6+i*Math.PI/3;i?p.lineTo(x+Math.cos(a)*s,y+Math.sin(a)*s):p.moveTo(x+Math.cos(a)*s,y+Math.sin(a)*s);}p.closePath();return p;};
+    return{build(x){const R=rng(3);cells.forEach(c=>{const h=hex(c.x,c.y,SZ-1);if(walls.has(key(c.q,c.r))){x.save();x.clip(h);dots(x,[c.x-SZ,c.y-SZ,SZ*2,SZ*2],2.2,(px,py)=>.45+.35*((py-c.y)/SZ),R);x.restore();}x.strokeStyle=INK;x.lineWidth=walls.has(key(c.q,c.r))?1.1:.6;x.stroke(h);});},
+      draw(x,t){if(!path.length)return;const L=path.length-1,f=((t*.22)%1.25)/1.0,pos=clamp(f,0,1)*L,i=Math.floor(pos),u=pos-i;
+        x.strokeStyle=ACC;x.lineWidth=1.2;x.setLineDash([3,4]);x.beginPath();path.forEach((c,j)=>j?x.lineTo(c.x,c.y):x.moveTo(c.x,c.y));x.globalAlpha=.4;x.stroke();x.setLineDash([]);x.globalAlpha=1;
+        x.lineWidth=2;x.beginPath();for(let j=0;j<=Math.min(i,L);j++){const c=path[j];j?x.lineTo(c.x,c.y):x.moveTo(c.x,c.y);}const A=path[Math.min(i,L)],B=path[Math.min(i+1,L)],bx=A.x+(B.x-A.x)*u,by=A.y+(B.y-A.y)*u;x.lineTo(bx,by);x.stroke();
+        x.fillStyle=ACC;x.font='9px -apple-system, Segoe UI, Helvetica, Arial, sans-serif';x.textAlign='center';for(let j=1;j<=Math.min(i,L);j++){x.fillText(String(j),path[j].x,path[j].y+3);}
+        const ang=Math.atan2(B.y-A.y,B.x-A.x),flap=Math.abs(Math.sin(t*28));x.save();x.translate(bx,by-10);x.rotate(ang);
+        x.fillStyle=PAPER;x.strokeStyle=INK;x.lineWidth=.9;[-1,1].forEach(s=>{x.beginPath();x.ellipse(-1,s*5*(.4+.6*flap),5,2.6,s*.5,0,TAU);x.fill();x.stroke();});
+        x.beginPath();x.ellipse(0,0,7,4.2,0,0,TAU);x.fillStyle='#f2c230';x.fill();x.stroke();x.fillStyle=INK;[-2,1.5].forEach(sx=>x.fillRect(sx-.9,-4,1.8,8));x.beginPath();x.arc(6.5,0,2.4,0,TAU);x.fill();x.restore();}};})();
+
+  // ---------- 2. Swayam in orbit, routes on the ground ----------
+  const orbit=(()=>{const EX=160,EY=420,ER=240,R=rng(21),nodes=[];
+    while(nodes.length<26){const x=40+R()*240,y=EY-Math.sqrt(Math.max(0,ER*ER-(x-EX)**2))+14+R()*110;if(y<300&&Math.hypot(x-EX,y-EY)<ER-8)nodes.push([x,y]);}
+    const edges=[];nodes.forEach((p,i)=>nodes.map((q,j)=>[j,Math.hypot(p[0]-q[0],p[1]-q[1])]).filter(e=>e[0]!==i).sort((a,b)=>a[1]-b[1]).slice(0,3).forEach(([j,d])=>{if(!edges.some(e=>(e[0]===i&&e[1]===j)||(e[0]===j&&e[1]===i)))edges.push([i,j,d]);}));
+    const s=nodes.reduce((a,b,i)=>b[0]<nodes[a][0]?i:a,0),g=nodes.reduce((a,b,i)=>b[0]>nodes[a][0]?i:a,0),dist=nodes.map(()=>1e9),prev=nodes.map(()=>-1),done=new Set();dist[s]=0;
+    while(done.size<nodes.length){let u=-1;dist.forEach((d,i)=>{if(!done.has(i)&&(u<0||d<dist[u]))u=i;});done.add(u);edges.forEach(([a,b,d])=>{const v=a===u?b:b===u?a:-1;if(v>=0&&dist[u]+d<dist[v]){dist[v]=dist[u]+d;prev[v]=u;}});}
+    const route=[];for(let v=g;v>=0;v=prev[v])route.unshift(nodes[v]);
+    return{build(x){const Rd=rng(22),earth=new Path2D();earth.arc(EX,EY,ER,0,TAU);x.save();x.clip(earth);dots(x,[0,170,D,150],1.2,(px,py)=>.05+.16*Math.max(0,noise(px,py))+.25*clamp((px-210)/110,0,1)+.2*clamp(1-(ER-Math.hypot(px-EX,py-EY))/20,0,1),Rd);x.restore();
+        x.strokeStyle=INK;x.lineWidth=1.5;x.stroke(earth);x.lineWidth=.7;edges.forEach(([a,b])=>{x.beginPath();x.moveTo(nodes[a][0],nodes[a][1]);x.lineTo(nodes[b][0],nodes[b][1]);x.stroke();});
+        nodes.forEach(n=>{x.beginPath();x.arc(n[0],n[1],2.4,0,TAU);x.fillStyle=PAPER;x.fill();x.lineWidth=1;x.stroke();});
+        x.lineWidth=.7;x.setLineDash([4,4]);x.beginPath();x.ellipse(160,150,150,52,-.08,0,TAU);x.stroke();x.setLineDash([]);},
+      draw(x,t){x.strokeStyle=ACC;x.lineWidth=2.2;x.setLineDash([6,4]);x.lineDashOffset=-t*14;x.beginPath();route.forEach((p,i)=>i?x.lineTo(p[0],p[1]):x.moveTo(p[0],p[1]));x.stroke();x.setLineDash([]);x.lineDashOffset=0;
+        const a=t*.5,sx=160+Math.cos(a)*150*Math.cos(-.08)-Math.sin(a)*52*Math.sin(-.08),sy=150+Math.cos(a)*150*Math.sin(-.08)+Math.sin(a)*52*Math.cos(-.08);
+        if(Math.sin(a)>0){const tgt=route[Math.floor(((t*.5)%1)*route.length)];x.strokeStyle=ACC;x.lineWidth=.8;x.setLineDash([2,3]);x.beginPath();x.moveTo(sx,sy);x.lineTo(tgt[0],tgt[1]);x.stroke();x.setLineDash([]);}
+        x.save();x.translate(sx,sy);x.rotate(Math.sin(t)*.2);x.strokeStyle=INK;x.lineWidth=1;x.fillStyle=PAPER;
+        [-1,1].forEach(s=>{x.beginPath();x.rect(s>0?7:-25,-4,18,8);x.fill();x.stroke();x.beginPath();for(let i=1;i<3;i++){x.moveTo((s>0?7:-25)+i*6,-4);x.lineTo((s>0?7:-25)+i*6,4);}x.stroke();});
+        x.beginPath();x.rect(-7,-7,14,14);x.fillStyle=PAPER;x.fill();x.stroke();x.fillStyle=INK;x.fillRect(-4,-4,8,8);x.beginPath();x.moveTo(0,-7);x.lineTo(3,-14);x.stroke();x.restore();}};})();
+
+  // ---------- 3. optical + radar footprints fusing ----------
+  const fusion=(()=>{const C=[[24,206],[164,132],[302,192],[160,276]];
+    const at=(u,v)=>{const a=[C[0][0]+(C[1][0]-C[0][0])*u,C[0][1]+(C[1][1]-C[0][1])*u],b=[C[3][0]+(C[2][0]-C[3][0])*u,C[3][1]+(C[2][1]-C[3][1])*u];return[a[0]+(b[0]-a[0])*v,a[1]+(b[1]-a[1])*v];};
+    const quadPath=(u0,u1,v0,v1)=>{const p=new Path2D(),q=[at(u0,v0),at(u1,v0),at(u1,v1),at(u0,v1)];q.forEach((r,i)=>i?p.lineTo(r[0],r[1]):p.moveTo(r[0],r[1]));p.closePath();return p;};
+    const ringPath=(cu,cv,r)=>{const p=new Path2D();for(let i=0;i<=40;i++){const a=i/40*TAU,q=at(cu+Math.cos(a)*r,cv+Math.sin(a)*r);i?p.lineTo(q[0],q[1]):p.moveTo(q[0],q[1]);}p.closePath();return p;};
+    return{build(x){const R=rng(31),g=quadPath(0,1,0,1);x.fillStyle=PAPER;x.fill(g);x.save();x.clip(g);dots(x,[0,120,D,170],1.4,(px,py)=>.05+.16*Math.max(0,noise(px,py))+.08*((py-130)/150),R);
+        x.strokeStyle=INK;x.lineWidth=.6;for(let l=0;l<6;l++){x.beginPath();for(let u=0;u<=1.001;u+=.02){const q=at(u,.15+l*.14+.05*Math.sin(u*9+l));u?x.lineTo(q[0],q[1]):x.moveTo(q[0],q[1]);}x.stroke();}x.restore();x.lineWidth=1.4;x.stroke(g);
+        // sensors above
+        x.fillStyle=PAPER;x.lineWidth=1.2;x.beginPath();x.arc(96,54,13,0,TAU);x.fill();x.stroke();x.beginPath();x.arc(96,54,6,0,TAU);x.fillStyle=INK;x.fill();
+        x.strokeStyle=ACC;x.lineWidth=1.4;for(let i=1;i<4;i++){x.beginPath();x.arc(228,50,i*6,Math.PI*.15,Math.PI*.85);x.stroke();}},
+      draw(x,t){const o=.5+.5*Math.sin(t*.7),u0=.12+.16*o,cu=.78-.16*o;
+        const opt=quadPath(u0,u0+.34,.22,.72),sar=ringPath(cu,.5,.2);
+        const a=at(u0,.22),b=at(u0+.34,.72),c=at(cu,.5);
+        x.strokeStyle=INK;x.lineWidth=.7;x.setLineDash([3,4]);x.beginPath();x.moveTo(96,66);x.lineTo(a[0],a[1]);x.moveTo(96,66);x.lineTo(b[0],b[1]);x.stroke();
+        x.strokeStyle=ACC;x.beginPath();x.moveTo(228,58);x.lineTo(c[0],c[1]);x.stroke();x.setLineDash([]);
+        x.strokeStyle=INK;x.lineWidth=1.3;x.stroke(opt);x.lineWidth=.5;for(let i=1;i<5;i++){const p=at(u0+.34*i/5,.22),q=at(u0+.34*i/5,.72);x.beginPath();x.moveTo(p[0],p[1]);x.lineTo(q[0],q[1]);x.stroke();const r=at(u0,.22+.5*i/5),s=at(u0+.34,.22+.5*i/5);x.beginPath();x.moveTo(r[0],r[1]);x.lineTo(s[0],s[1]);x.stroke();}
+        x.strokeStyle=ACC;for(let i=1;i<=3;i++){x.lineWidth=i===3?1.5:.8;x.stroke(ringPath(cu,.5,.2*i/3));}
+        x.save();x.clip(opt);x.clip(sar);x.strokeStyle=ACC;x.lineWidth=1.1;x.globalAlpha=.55+.45*o;for(let i=-30;i<30;i++){x.beginPath();x.moveTo(160+i*5,120);x.lineTo(160+i*5+60,290);x.stroke();}x.restore();x.globalAlpha=1;}};})();
+
+  // ---------- 4. fairing opens, the payload unfolds ----------
+  const fairing=(()=>{const base=212,L=128,R=172,tip=92;
+    const half=s=>{const p=new Path2D(),xo=s<0?L:R;p.moveTo(160,base);p.lineTo(xo,base);p.bezierCurveTo(xo,170,s<0?140:180,120,160,tip);p.closePath();return p;};
+    return{build(x){},
+      draw(x,t){const o=ease(clamp((Math.sin(t*.55)+1)/2*1.25-.1,0,1));
+        x.strokeStyle=GREY;x.lineWidth=.7;x.setLineDash([3,4]);x.beginPath();x.moveTo(L,base);x.bezierCurveTo(L,170,140,120,160,tip);x.bezierCurveTo(180,120,R,170,R,base);x.stroke();x.setLineDash([]);
+        // rocket body
+        x.fillStyle=PAPER;x.strokeStyle=INK;x.lineWidth=1.4;x.beginPath();x.rect(L,base,R-L,92);x.fill();x.stroke();
+        x.save();x.beginPath();x.rect(L,base,R-L,92);x.clip();x.lineWidth=.6;for(let i=-10;i<20;i++){x.beginPath();x.moveTo(L+i*6,base);x.lineTo(L+i*6-30,base+92);x.stroke();}x.restore();
+        x.lineWidth=1.2;x.beginPath();x.moveTo(L,base+30);x.lineTo(R,base+30);x.stroke();
+        // payload: a lattice that grows once the constraint is gone
+        const rad=12+o*92,ring=[];for(let i=0;i<12;i++){const a=i/12*TAU+t*.1;ring.push([160+Math.cos(a)*rad,160+Math.sin(a)*rad*.62]);}
+        const inner=ring.map(p=>[160+(p[0]-160)*.5,160+(p[1]-160)*.5]);
+        x.strokeStyle=ACC;x.lineWidth=1;x.beginPath();ring.forEach((p,i)=>{const q=ring[(i+1)%12],r=inner[i],s=inner[(i+1)%12];x.moveTo(p[0],p[1]);x.lineTo(q[0],q[1]);x.moveTo(p[0],p[1]);x.lineTo(r[0],r[1]);x.moveTo(r[0],r[1]);x.lineTo(s[0],s[1]);x.moveTo(q[0],q[1]);x.lineTo(r[0],r[1]);});x.stroke();
+        [...ring,...inner].forEach(p=>{x.beginPath();x.arc(p[0],p[1],2.2,0,TAU);x.fillStyle=PAPER;x.fill();x.strokeStyle=ACC;x.stroke();});
+        x.beginPath();x.rect(152,152,16,16);x.fillStyle=PAPER;x.fill();x.strokeStyle=INK;x.stroke();
+        // fairing halves swing away
+        [-1,1].forEach(s=>{const px=s<0?L:R;x.save();x.translate(px+s*o*40,base+o*30);x.rotate(s*o*1.0);x.translate(-px,-base);const h=half(s);x.fillStyle=PAPER;x.fill(h);x.save();x.clip(h);x.strokeStyle=INK;x.lineWidth=.55;for(let i=0;i<22;i++){x.beginPath();x.moveTo(110,tip+i*6);x.lineTo(210,tip+i*6);x.stroke();}x.restore();x.lineWidth=1.4;x.strokeStyle=INK;x.stroke(h);x.restore();});}};})();
+
+  // ---------- 5. seeds grow into a branching tree ----------
+  const growth=(()=>{const R=rng(41),tree=[];
+    (function br(x,y,a,len,d){const ex=x+Math.cos(a)*len,ey=y+Math.sin(a)*len;tree.push({x,y,ex,ey,d});if(d<5){br(ex,ey,a-.42-R()*.2,len*.74,d+1);br(ex,ey,a+.38+R()*.2,len*.72,d+1);if(R()<.3)br(ex,ey,a+(R()-.5)*.2,len*.6,d+1);}})(160,258,-Math.PI/2,56,0);
+    return{build(x){const Rd=rng(42);dots(x,[0,252,D,68],1.5,(px,py)=>.15+.55*((py-252)/68),Rd);x.strokeStyle=INK;x.lineWidth=1.2;x.beginPath();x.moveTo(10,258);x.quadraticCurveTo(160,250,310,258);x.stroke();
+        [[70,262],[250,264],[110,268]].forEach(([sx,sy])=>{x.beginPath();x.ellipse(sx,sy,4,2.6,.4,0,TAU);x.fillStyle=PAPER;x.fill();x.lineWidth=1;x.stroke();});},
+      draw(x,t){const g=((t*.12)%1.3)/1.1;
+        x.strokeStyle=ACC;x.lineWidth=.9;x.setLineDash([3,4]);x.globalAlpha=.6;x.beginPath();for(let u=0;u<=clamp(g,0,1);u+=.02){const px=30+u*260,py=250-Math.pow(u,2.6)*200;u?x.lineTo(px,py):x.moveTo(px,py);}x.stroke();x.setLineDash([]);x.globalAlpha=1;
+        tree.forEach(b=>{const f=clamp(g*6.2-b.d,0,1);if(f<=0)return;x.strokeStyle=INK;x.lineWidth=Math.max(.6,3.4-b.d*.6);x.beginPath();x.moveTo(b.x,b.y);x.lineTo(b.x+(b.ex-b.x)*f,b.y+(b.ey-b.y)*f);x.stroke();
+          if(b.d===5&&f>=1){x.beginPath();x.arc(b.ex,b.ey,2.6,0,TAU);x.fillStyle=ACC;x.fill();}});
+        [[70,262],[250,264],[110,268]].forEach(([sx,sy],i)=>{const h=clamp(g*3-i*.4,0,1)*16;x.strokeStyle=INK;x.lineWidth=1;x.beginPath();x.moveTo(sx,sy);x.quadraticCurveTo(sx-3,sy-h/2,sx+1,sy-h);x.stroke();if(h>12){x.beginPath();x.ellipse(sx+4,sy-h,4,2,-.5,0,TAU);x.fillStyle=PAPER;x.fill();x.stroke();}});}};})();
+
+  // ---------- 6. DNA helix dissolving into a network (biological memory) ----------
+  const helix=(()=>{const R=rng(51),tg=[];for(let i=0;i<40;i++)tg.push([70+R()*180,(R()-.5)*20]);
+    return{build(x){},
+      draw(x,t){const pts=[];let idx=0;
+        for(let y=34;y<=292;y+=11){const ph=y*.045+t*1.1,w=clamp((y-168)/110,0,1),e=ease(w);
+          const a=[160+Math.sin(ph)*44,y],b=[160-Math.sin(ph)*44,y],ta=tg[idx%40],tb=tg[(idx+17)%40];idx++;
+          const A=[a[0]+(ta[0]-a[0])*e,a[1]+ta[1]*e],B=[b[0]+(tb[0]-b[0])*e,b[1]+tb[1]*e],front=Math.cos(ph)>0;pts.push([A,B,w,front]);}
+        x.lineWidth=1.6;x.strokeStyle=INK;[0,1].forEach(s=>{x.beginPath();pts.forEach((p,i)=>{const q=p[s];if(p[2]>.85)return;i?x.lineTo(q[0],q[1]):x.moveTo(q[0],q[1]);});x.stroke();});
+        pts.forEach(([A,B,w,front],i)=>{x.globalAlpha=1-w*.4;x.strokeStyle=i%3===0?ACC:INK;x.lineWidth=front?1.4:.7;x.beginPath();x.moveTo(A[0],A[1]);x.lineTo(B[0],B[1]);x.stroke();
+          if(w>0){x.strokeStyle=INK;x.lineWidth=.6;const n=pts[i+1];if(n){x.beginPath();x.moveTo(A[0],A[1]);x.lineTo(n[1][0],n[1][1]);x.stroke();}}
+          [A,B].forEach((q,s)=>{x.beginPath();x.arc(q[0],q[1],w>0?2.6:1.8,0,TAU);x.fillStyle=(i+s)%3===0?ACC:PAPER;x.fill();x.lineWidth=1;x.strokeStyle=(i+s)%3===0?ACC:INK;x.stroke();});});
+        x.globalAlpha=1;}};})();
+
+  // ---------- 7. people connecting ----------
+  const together=(()=>{const R=rng(61),ns=[];for(let i=0;i<46;i++){const a=R()*TAU,r=30+Math.sqrt(R())*112;ns.push([160+Math.cos(a)*r,160+Math.sin(a)*r*.86,R()*TAU,R()<.2]);}
+    return{build(x){},
+      draw(x,t){const P=ns.map(n=>[n[0]+Math.sin(t*.4+n[2])*6,n[1]+Math.cos(t*.35+n[2])*5,n[3]]);
+        for(let i=0;i<P.length;i++)for(let j=i+1;j<P.length;j++){const d=Math.hypot(P[i][0]-P[j][0],P[i][1]-P[j][1]);if(d<52){x.globalAlpha=(1-d/52)*.8;x.strokeStyle=INK;x.lineWidth=.7;x.beginPath();x.moveTo(P[i][0],P[i][1]);x.lineTo(P[j][0],P[j][1]);x.stroke();}}
+        const near=P.map((p,i)=>[i,Math.hypot(p[0]-160,p[1]-160)]).sort((a,b)=>a[1]-b[1]).slice(0,7);
+        near.forEach(([i],k2)=>{const p=P[i],f=(t*.5+k2*.14)%1;x.globalAlpha=.9;x.strokeStyle=ACC;x.lineWidth=.9;x.beginPath();x.moveTo(p[0],p[1]);x.lineTo(160,160);x.stroke();x.globalAlpha=Math.sin(f*Math.PI);x.fillStyle=ACC;x.beginPath();x.arc(p[0]+(160-p[0])*f,p[1]+(160-p[1])*f,2,0,TAU);x.fill();});
+        x.globalAlpha=1;P.forEach(p=>{x.beginPath();x.arc(p[0],p[1],p[2]?3.2:2.4,0,TAU);x.fillStyle=p[2]?ACC:PAPER;x.fill();x.lineWidth=1;x.strokeStyle=p[2]?ACC:INK;x.stroke();});
+        const pulse=(t*.8)%1;x.strokeStyle=ACC;x.globalAlpha=1-pulse;x.lineWidth=1.2;x.beginPath();x.arc(160,160,6+pulse*30,0,TAU);x.stroke();x.globalAlpha=1;
+        x.beginPath();x.arc(160,160,6,0,TAU);x.fillStyle=ACC;x.fill();}};})();
+
+  const scenes={sphere};
+  const figs=[...document.querySelectorAll('.plate')],story=document.querySelector('.story'),main=document.querySelector('.layout main');
+  const paras=[...main.querySelectorAll('p')].filter(p=>p.textContent.trim().length>0);
+  const mobile=matchMedia('(max-width: 760px)');
+  function place(){
+    figs.forEach(f=>{const p=paras[+f.dataset.para];if(!p)return;
+      if(mobile.matches){if(f.parentNode!==main)main.insertBefore(f,p);f.style.top='';}
+      else{if(f.parentNode!==story)story.appendChild(f);}});
+    if(!mobile.matches){const base=story.getBoundingClientRect().top;let last=-1e9;
+      figs.forEach(f=>{const p=paras[+f.dataset.para];let top=p.getBoundingClientRect().top-base;top=Math.max(top,last+12);f.style.top=top+'px';last=top+f.offsetHeight;});story.style.minHeight=last+'px';}else story.style.minHeight='';
+  }
+  const runs=figs.map(f=>({f,cv:f.querySelector('canvas'),sc:scenes[f.dataset.scene],vis:true,st:null,ctx:null}));
+  function size(r){const w=r.cv.clientWidth,dpr=Math.min(2,window.devicePixelRatio||1);if(!w)return;k=w/D;S=k*dpr;r.cv.width=Math.round(D*S);r.cv.height=Math.round(D*S);r.ctx=r.cv.getContext('2d');CUR=r.cv;const b=mkCanvas();r.sc.build(b.x);r.st=b.c;r.k=k;r.S=S;}
+  function paint(r,t){if(!r.ctx)return;k=r.k;S=r.S;const x=r.ctx;x.setTransform(1,0,0,1,0,0);x.clearRect(0,0,r.cv.width,r.cv.height);x.drawImage(r.st,0,0);x.setTransform(S,0,0,S,0,0);x.lineCap='round';x.lineJoin='round';x.globalAlpha=1;r.sc.draw(x,t);x.globalAlpha=1;}
+  if('IntersectionObserver' in window){const io=new IntersectionObserver(es=>es.forEach(e=>{const r=runs.find(r=>r.f===e.target);if(r)r.vis=e.isIntersecting;}));runs.forEach(r=>io.observe(r.f));}
+  let raf=0,t0=performance.now();
+  function loop(now){const t=(now-t0)/1000;runs.forEach(r=>{if(r.vis)paint(r,t);});raf=requestAnimationFrame(loop);}
+  function start(){cancelAnimationFrame(raf);place();runs.forEach(size);if(reduce)runs.forEach(r=>paint(r,3));else raf=requestAnimationFrame(loop);}
+  start();
+  let rt,lw=innerWidth;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{place();if(innerWidth!==lw){lw=innerWidth;start();}},150);});
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(place);
+  addEventListener('load',place);
+})();
+</script>
 </body>
 </html>
